@@ -19,6 +19,12 @@ if __name__ == '__main__':
     icon = QIcon(str(WINDOW_ICON_PATH))
     window.setWindowIcon(icon)
     app.setWindowIcon(icon)
+    
+    # Configuração para o icon aparecer na taskbar do Windows
+    if sys.platform.startswith('win'):
+        import ctypes
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            u'CompanyName.ProductName.SubProduct.VersionInformation')
 
     # Executa tudo
     window.adjustFixedSize()
