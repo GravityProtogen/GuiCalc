@@ -1,7 +1,5 @@
 import sys
 
-
-
 from mainwindow import MainWindow, ButtonsGrid, Display, Info
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
@@ -36,7 +34,6 @@ if __name__ == '__main__':
     # Grid e Botões
     buttonsGrid = ButtonsGrid()
     window.vLayout.addLayout(buttonsGrid)
-
 
 
     # Executa tudo

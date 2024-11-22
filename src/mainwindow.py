@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton,QGridLayout
 from PySide6.QtCore import Qt
+from utils import *
 from styles import *
 
 
@@ -42,8 +43,8 @@ class Display(QLineEdit):
 
     def configStyle(self):
         margins = [TEXT_MARGIN for _ in range(4)]
-        self.setStyleSheet(f'font-size:{BIG_FONT_SIZE}px')
-        self.setMinimumHeight(BIG_FONT_SIZE * 2)
+        self.setStyleSheet(f'font-size:{MEDIUM_FONT_SIZE}px')
+        self.setMinimumHeight(MEDIUM_FONT_SIZE * 2)
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.setTextMargins(*margins)
         self.setMinimumWidth(MINIMUN_WIDTH)
@@ -58,11 +59,10 @@ class Button(QPushButton):
     def configStyle(self):
         # Fonte
         font = self.font()
-        font.setPixelSize(MEDIUM_FONT_SIZE)
+        font.setPixelSize(SMALL_FONT_SIZE)
         font.setBold(True)
         self.setFont(font)
-        self.setMinimumSize(75, 75)
-        self.setProperty('cssClass','specialButton')
+        self.setMinimumSize(45, 45)
 
 class ButtonsGrid(QGridLayout):
     def __init__(self, *args, **kwargs) -> None:
@@ -81,4 +81,8 @@ class ButtonsGrid(QGridLayout):
         for numero_linha, row in enumerate(self._grid_mask):
             for numero_coluna, button_text in enumerate(row):
                 button = Button(button_text)
+                
+                if not eNumouDot(button_text) and not len(button_text) == 0:
+                    button.setProperty('cssClass','specialButton')
+                
                 self.addWidget(button, numero_linha, numero_coluna)
