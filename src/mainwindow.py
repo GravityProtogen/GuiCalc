@@ -1,6 +1,6 @@
-from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton,QGridLayout
 from PySide6.QtCore import Qt
-from variables import *
+from styles import *
 
 
 class MainWindow(QMainWindow):
@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
         self.adjustSize()
         self.setFixedSize(self.width(), self.height())
 
-    def addToVLayout(self, widget: QWidget):
+    def addWidgetToVLayout(self, widget: QWidget):
         self.vLayout.addWidget(widget)
         
         
@@ -63,3 +63,22 @@ class Button(QPushButton):
         self.setFont(font)
         self.setMinimumSize(75, 75)
         self.setProperty('cssClass','specialButton')
+
+class ButtonsGrid(QGridLayout):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        
+        self._grid_mask = [
+            ['C', '◀', '^', '/'],
+            ['7', '8', '9', '*'],
+            ['4', '5', '6', '-'],
+            ['1', '2', '3', '+'],
+            ['',  '0', '.', '='],
+        ]
+        self._makeGrid()
+        
+    def _makeGrid(self):
+        for numero_linha, row in enumerate(self._grid_mask):
+            for numero_coluna, button_text in enumerate(row):
+                button = Button(button_text)
+                self.addWidget(button, numero_linha, numero_coluna)

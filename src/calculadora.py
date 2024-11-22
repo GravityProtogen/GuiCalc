@@ -1,12 +1,11 @@
 import sys
- 
-from display import Display
+
+
 from info import Info
-from mainwindow import MainWindow
+from mainwindow import MainWindow, ButtonsGrid, Display
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
-from styles import setupTheme
-from variables import WINDOW_ICON_PATH
+from styles import setupTheme, WINDOW_ICON_PATH
 
 if __name__ == '__main__':
     # Cria a aplicação
@@ -22,7 +21,7 @@ if __name__ == '__main__':
     
     # Info
     info = Info('242.3 ^ 12.45' )
-    window.addToVLayout(info)    
+    window.addWidgetToVLayout(info)    
     
     # Configuração para o icon aparecer na taskbar do Windows
     if sys.platform.startswith('win'):
@@ -32,7 +31,12 @@ if __name__ == '__main__':
 
     # Display
     display = Display()
-    window.addToVLayout(display)
+    window.addWidgetToVLayout(display)
+    
+    # Grid e Botões
+    buttonsGrid = ButtonsGrid()
+    window.vLayout.addLayout(buttonsGrid)
+
 
 
     # Executa tudo
