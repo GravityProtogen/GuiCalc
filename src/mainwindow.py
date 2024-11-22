@@ -1,4 +1,6 @@
-from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
+from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton
+from PySide6.QtCore import Qt
+from variables import *
 
 
 class MainWindow(QMainWindow):
