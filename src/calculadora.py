@@ -1,8 +1,8 @@
 import sys
 
 
-from info import Info
-from mainwindow import MainWindow, ButtonsGrid, Display
+
+from mainwindow import MainWindow, ButtonsGrid, Display, Info
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
 from styles import setupTheme, WINDOW_ICON_PATH
