@@ -1,7 +1,10 @@
+from typing import TYPE_CHECKING
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QLabel, QLineEdit, QPushButton,QGridLayout
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Slot
 from utils import *
 from styles import *
+if TYPE_CHECKING:
+    from mainwindow import Display,Info
 
 
 class MainWindow(QMainWindow):
@@ -65,7 +68,7 @@ class Button(QPushButton):
         self.setMinimumSize(45, 45)
 
 class ButtonsGrid(QGridLayout):
-    def __init__(self, *args, **kwargs) -> None:
+    def __init__(self, display: 'Display', info : 'Info', *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         
         self._grid_mask = [
@@ -75,7 +78,18 @@ class ButtonsGrid(QGridLayout):
             ['1', '2', '3', '+'],
             ['',  '0', '.', '='],
         ]
+        self.display = display
+        self.info = info
+        self.equation = ''
         self._makeGrid()
+        
+        @property
+        def equation(self):
+            return self._equation
+        @equation.setter
+        def equation(self, value):
+            self._equation = value
+            self.info.setText(value)
         
     def _makeGrid(self):
         for numero_linha, row in enumerate(self._grid_mask):
@@ -86,3 +100,22 @@ class ButtonsGrid(QGridLayout):
                     button.setProperty('cssClass','specialButton')
                 
                 self.addWidget(button, numero_linha, numero_coluna)
+                buttonSlot = self._ButtonDisplayConnection(
+                    self._ButtonTextToDisplay,
+                    button,
+                    
+                    )
+                button.clicked.connect(buttonSlot)
+                
+    def _ButtonDisplayConnection(self, func, *args, **kwargs):
+        @Slot(bool)
+        def realSlot(_):
+            func(*args, **kwargs)
+        return realSlot
+    
+    def _ButtonTextToDisplay(self, button):
+        buttonText = button.text()
+        newDisplayValue = self.display.text() + buttonText
+        if not eNumeroValido(newDisplayValue):
+            return
+        self.display.insert(buttonText)
