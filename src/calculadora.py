@@ -21,7 +21,7 @@ if __name__ == '__main__':
     app.setWindowIcon(icon)
     
     # Info
-    info = Info('242.3 ^ 12.45' )
+    info = Info('Sua Conta' )
     window.addWidgetToVLayout(info)    
     
     # Configuração para o icon aparecer na taskbar do Windows
